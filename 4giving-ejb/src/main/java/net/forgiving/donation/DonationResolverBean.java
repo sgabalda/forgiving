@@ -13,14 +13,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import net.forgiving.common.donation.Donation;
+import net.forgiving.donation.persistence.DonationStorageException;
+import net.forgiving.donation.persistence.DonationsDao;
+import net.forgiving.donation.shipping.ShippingBean;
 
 /**
  *
@@ -31,6 +36,12 @@ import net.forgiving.common.donation.Donation;
 public class DonationResolverBean {
     
     private static final Logger LOG = Logger.getLogger(DonationResolverBean.class.getName());
+    
+    @Inject
+    private DonationsDao donationsDao;
+    
+    @EJB
+    private ShippingBean shippingBean;
     
     @Resource
     private TimerService timerService;
@@ -76,12 +87,19 @@ public class DonationResolverBean {
     }
 
     @Timeout
-    public void resolve(Timer t){
+    public void resolve(Timer t) throws DonationStorageException{
         //aqui resolem la donació
         DonationTimerInfo dti = (DonationTimerInfo)t.getInfo();
         //obtenir la donació del DAO
-        //modificar l'estat
-        //notificar al guanyador
+        Donation d = donationsDao.getDonationById(dti.getDonationId());
+        //TODO modificar l'estat
+        
+        //TODO notificar al guanyador
+        
+        //enviar el producte
+        
+        shippingBean.processShipping(d);
+        
         LOG.log(Level.INFO, "Resolent la donacio {0}", dti.getDonationId());
     }
     
