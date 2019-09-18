@@ -1,0 +1,21 @@
+
+//	Nou item
+
+{
+"description":"Item de prova 4",
+"picUrl":"http://www.goolge.com/images/1234.jpg",
+"category":[{"id":4},{"id":55}]
+}
+
+
+//	Nova donacio
+
+{
+	"donator":{"id":2},
+	"item": {
+		"description":"Item de prova 4",
+		"picUrl":"http://www.goolge.com/images/1234.jpg",
+		"category":[{"id":4},{"id":5}]
+	}
+
+}

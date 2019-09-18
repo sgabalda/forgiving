@@ -8,6 +8,7 @@ package net.forgiving.donation;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -16,6 +17,7 @@ import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
+import javax.ws.rs.Path;
 import net.forgiving.common.donation.Donation;
 
 /**
@@ -23,6 +25,7 @@ import net.forgiving.common.donation.Donation;
  * @author gabalca
  */
 @Stateless
+@Path("/resolutions")
 public class DonationResolverBean {
     
     private static final Logger LOG = Logger.getLogger(DonationResolverBean.class.getName());
@@ -50,6 +53,11 @@ public class DonationResolverBean {
             return dti.getDonationId()==d.getId();
         }).forEach(t -> t.cancel());
     }
+    
+    public List<DonationScheduledResolution> getScheduledResolutions(){
+        
+        return null;
+    }
 
     @Timeout
     public void resolve(Timer t){
@@ -59,6 +67,10 @@ public class DonationResolverBean {
         //modificar l'estat
         //notificar al guanyador
         LOG.log(Level.INFO, "Resolent la donacio {0}", dti.getDonationId());
+    }
+    
+    public class DonationScheduledResolution{
+        
     }
     
 }
