@@ -11,12 +11,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import net.forgiving.common.donation.Donation;
 
@@ -54,9 +56,23 @@ public class DonationResolverBean {
         }).forEach(t -> t.cancel());
     }
     
+    @GET
     public List<DonationScheduledResolution> getScheduledResolutions(){
-        
-        return null;
+        return timerService.getAllTimers().stream()
+                .map((Timer t) -> {
+                    
+                    DonationScheduledResolution dsr = new DonationScheduledResolution();
+                    if(t.getInfo() instanceof DonationTimerInfo){
+                        DonationTimerInfo dti = (DonationTimerInfo)t.getInfo();
+                        dsr.setDonationId(dti.getDonationId());
+                    }
+
+                    dsr.setScheduledDate(t.getNextTimeout());
+                    
+                    return dsr;
+                })
+                .collect(Collectors.toList());
+
     }
 
     @Timeout
@@ -69,9 +85,7 @@ public class DonationResolverBean {
         LOG.log(Level.INFO, "Resolent la donacio {0}", dti.getDonationId());
     }
     
-    public class DonationScheduledResolution{
-        
-    }
+
     
 }
 class DonationTimerInfo implements Serializable{
