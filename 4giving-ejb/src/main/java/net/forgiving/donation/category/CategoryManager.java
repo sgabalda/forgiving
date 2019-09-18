@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.ConcurrencyManagement;
 import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.ejb.Remote;
@@ -64,6 +65,8 @@ public class CategoryManager  implements CategoryLocal, CategoryRemote{
         if(t!=null){
             System.out.println(t.getInfo());
         }
+        //t.cancel(); podem cancelar el timer
+        //
         System.out.println("Refrescant categories");
         categories=new HashSet<>(
                 categoryDao.getAllCategories()

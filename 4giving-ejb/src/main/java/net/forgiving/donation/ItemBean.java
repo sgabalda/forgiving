@@ -44,7 +44,7 @@ public class ItemBean{
     @Consumes(MediaType.APPLICATION_JSON)
     @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public void createItem(Item i) throws ItemStorageException{
-        System.out.println("Storing item");
+        System.out.println("Storing item!!");
         try{
             itemDao.storeItem(i);
         }catch(ItemStorageException ex){
