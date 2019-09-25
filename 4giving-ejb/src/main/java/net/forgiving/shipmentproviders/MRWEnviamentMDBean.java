@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.EJBContext;
 import javax.ejb.MessageDriven;
 import javax.ejb.MessageDrivenContext;
 import javax.ejb.SessionContext;
@@ -30,6 +31,10 @@ import net.forgiving.donation.shipping.ShippingInfo;
     @ActivationConfigProperty(
             propertyName = "destinationLookup",
             propertyValue = "jms/4givingDelivery"
+    ),
+    @ActivationConfigProperty(
+            propertyName = "messageSelector",
+            propertyValue = "urgent = TRUE"
     )
 })
 public class MRWEnviamentMDBean implements MessageListener{
@@ -37,7 +42,7 @@ public class MRWEnviamentMDBean implements MessageListener{
  private static final Logger LOG = Logger.getLogger(SeurEnviamentMDBean.class.getName());
     
     @Resource
-    private MessageDrivenContext mdCtx;
+    private EJBContext mdCtx;
 
     @Override
     public void onMessage(Message msg) {
