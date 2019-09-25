@@ -19,6 +19,8 @@ import javax.jms.MessageListener;
  *
  * @author gabalca
  */
+
+
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(
             propertyName = "destinationType",
@@ -49,6 +51,7 @@ import javax.jms.MessageListener;
             propertyValue = "notifyUsersClient"
     )
 })
+
 public class NotifyUsersOnShutdownMDB implements MessageListener{
 
     private static final Logger LOG = Logger.getLogger(NotifyUsersOnShutdownMDB.class.getName());

@@ -19,6 +19,8 @@ import javax.jms.MessageListener;
  *
  * @author gabalca
  */
+
+
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(
             propertyName = "destinationType",
@@ -29,6 +31,7 @@ import javax.jms.MessageListener;
             propertyValue = "jms/4givingNotifications"
     )
 })
+
 public class ManteinanceSeurIntegrationNotifierMDB implements MessageListener {
 
     private static final Logger LOG = Logger.getLogger(ManteinanceSeurIntegrationNotifierMDB.class.getName());

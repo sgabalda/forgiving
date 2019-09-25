@@ -48,6 +48,7 @@ public class ShippingBean {
                     " urgent/int : "+urgent+"/"+internacional);
             
             JMSProducer producer = jmsContext.createProducer();
+            producer.setPriority(d.getId().intValue()%10);
             producer.send(dest, om);
         } catch (JMSException ex) {
             Logger.getLogger(ShippingBean.class.getName()).log(Level.SEVERE, null, ex);
