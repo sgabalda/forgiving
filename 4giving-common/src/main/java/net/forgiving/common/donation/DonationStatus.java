@@ -10,8 +10,24 @@ package net.forgiving.common.donation;
  * @author gabalca
  */
 public enum DonationStatus {
-    OPENED,
-    TIMED_OUT,
-    FINISHED,
-    DELETED;
+    OPENED(1),
+    TIMED_OUT(2),
+    FINISHED(3),
+    DELETED(4);
+    
+    int codi;
+
+    private DonationStatus(int codi) {
+        this.codi = codi;
+    }
+
+    public int getCodi() {
+        return codi;
+    }
+
+    public void setCodi(int codi) {
+        this.codi = codi;
+    }
+    
+    
 }

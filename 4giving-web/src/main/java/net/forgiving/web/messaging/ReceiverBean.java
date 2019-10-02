@@ -43,6 +43,9 @@ public class ReceiverBean {
         // consumidor síncron
         text = receiver.receiveBody(String.class, 10000);
         
+        FacesMessage facesMessage;
+        facesMessage = new FacesMessage("Rebut: "+text);
+                    FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         //consumidor asícnron
         /*
         receiver.setMessageListener(new MessageListener() {

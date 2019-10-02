@@ -5,18 +5,31 @@
  */
 package net.forgiving.common.donation;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author gabalca
  */
-public class Item {
-    
+@Entity
+public class Item implements Serializable {
+    @Id
     private Long id;
     
     private String description;
     private String picUrl;
+    @ManyToMany
+    @JoinTable(name = "ITEM_CATEGORY",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "categ_id")
+            )
     private List<Category> category;
 
     public Long getId() {
@@ -55,6 +68,31 @@ public class Item {
     @Override
     public String toString() {
         return "Item{" + "id=" + id + ", description=" + description + ", picUrl=" + picUrl + ", category=" + category + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 61 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Item other = (Item) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
     
     

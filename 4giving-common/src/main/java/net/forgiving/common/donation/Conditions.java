@@ -5,17 +5,22 @@
  */
 package net.forgiving.common.donation;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import net.forgiving.common.user.Address;
 
 /**
  *
  * @author gabalca
  */
-public class Conditions {
+@Embeddable
+public class Conditions implements Serializable {
 
     private Instant pickingDeadline; 
+    @Transient
     private String hoursAvailable;
     private Address pickingAdress;
 

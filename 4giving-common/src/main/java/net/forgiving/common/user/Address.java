@@ -5,18 +5,27 @@
  */
 package net.forgiving.common.user;
 
+import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  * @author gabalca
  */
-public class Address {
-    
+@Entity
+public class Address implements Serializable {
+    @Id
     private Long id;
     
     private String street;
+    @Column(name="NUM")
     private String number;
     private String zip;
     private String province;
+    @Column(name="COUNTRY")
     private String State;
     private double lat;
     private double lon;
@@ -90,4 +99,30 @@ public class Address {
     public String toString() {
         return "Address{" + "id=" + id + ", street=" + street + ", number=" + number + ", zip=" + zip + ", province=" + province + ", State=" + State + ", lat=" + lat + ", lon=" + lon + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 73 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Address other = (Address) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
 }

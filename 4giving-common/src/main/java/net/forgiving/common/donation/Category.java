@@ -5,12 +5,18 @@
  */
 package net.forgiving.common.donation;
 
+import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  * @author gabalca
  */
-
-public class Category {
+@Entity
+public class Category implements Serializable {
+    @Id
     private Long id;
     private String name;
 
@@ -43,6 +49,31 @@ public class Category {
     @Override
     public String toString() {
         return "Category{" + "id=" + id + ", name=" + name + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Category other = (Category) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
     
     
