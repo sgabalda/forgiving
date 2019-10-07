@@ -7,8 +7,13 @@ package net.forgiving.common.donation;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.ZonedDateTime;
+import java.util.Date;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import net.forgiving.common.user.Address;
 
@@ -19,10 +24,23 @@ import net.forgiving.common.user.Address;
 @Embeddable
 public class Conditions implements Serializable {
 
+    @Transient
     private Instant pickingDeadline; 
     @Transient
     private String hoursAvailable;
+    
+    @OneToOne
+    @JoinColumn(name = "address_id")
     private Address pickingAdress;
+    
+    @Access(AccessType.PROPERTY)
+    @Column(name = "picking_time")
+    public Date getPickingDate(){
+        return pickingDeadline==null ? null : new Date(pickingDeadline.toEpochMilli());
+    }
+    public void setPickingDate(Date d){
+        pickingDeadline = d ==null? null : d.toInstant();
+    }
 
     public Instant getPickingDeadline() {
         return pickingDeadline;

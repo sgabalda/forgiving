@@ -10,6 +10,8 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -59,9 +61,11 @@ public class Donation implements Serializable {
     private Instant resolvingDeadline;
     
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created")
     private Date createdDate;
     
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "resolving_time")
     private Date resolvingDate;
     
     
@@ -70,7 +74,8 @@ public class Donation implements Serializable {
                                         configurar-lo perque es persisteixi 
                                         amb el ordinal, o amb el nom  */
     @OneToMany(fetch = FetchType.LAZY, 
-            targetEntity = Petition.class, mappedBy = "donation")
+            targetEntity = Petition.class, mappedBy = "donation",cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
+    @JsonbTransient
     private List<Petition> petitons;    /*  */
     
     @PrePersist @PreUpdate

@@ -16,7 +16,10 @@ public interface PetitionsDao  {
     void savePetition(Petition p);
     void removeEntity(Petition p);
     Petition getPetitionById(Long id);
-    List<Petition> getPetitionsByUser(Long user_id);
-    List<Petition> getPetitionsByDonation(Long donation_id);
+    List<Petition> getPetitionsByUser(Long user_id, int offset, int results);
+    List<Petition> getPetitionsByDonation(Long donation_id, int offset, int results);
     
+    Petition getWinningPetition(Long donationId);
+    
+    List<Petition> getPetitionsForUserLastDonations(Long user_id, int numDonations);
 }

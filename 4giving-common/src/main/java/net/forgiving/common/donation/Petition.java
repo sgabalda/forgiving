@@ -19,6 +19,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -31,6 +33,24 @@ import net.forgiving.common.user.User;
  * @author gabalca
  */
 @Entity
+@NamedQueries({
+      @NamedQuery(
+              name = "findPetitionsByUser",
+              query = "Select p from Petition p "
+                + "where p.petitioner.id = :userid"
+      ),
+      @NamedQuery(
+              name = "findPetitionsByDonation",
+              query = "select p from Petition p where "
+                      + "p.donation.id = :donationid order by p.maxKarmaCost desc"
+      ),
+      @NamedQuery(
+              name = "findPetitionsWinning",
+              query = "select p from Petition p where "
+                      + "p.donation.id = :donationid "
+                      + "order by p.maxKarmaCost desc, p.createdDate asc"
+      )
+})
 @Access(AccessType.PROPERTY)
 public class Petition implements Serializable {
 
