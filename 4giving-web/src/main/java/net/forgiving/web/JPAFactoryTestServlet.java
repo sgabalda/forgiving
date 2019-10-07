@@ -31,7 +31,7 @@ import net.forgiving.common.donation.Petition;
  *
  * @author gabalca
  */
-@WebServlet(urlPatterns = "/JPA")
+@WebServlet(urlPatterns = "/JPAfactory")
 @PersistenceContext(name = "persUnit/forgiving", unitName = "net.forgiving_4givingPU")
 public class JPAFactoryTestServlet extends HttpServlet {
 

@@ -56,7 +56,15 @@ public class JPATestServlet extends HttpServlet {
             
             } catch (Exception ex) {
                 Logger.getLogger(JPATestServlet.class.getName()).log(Level.SEVERE, null, ex);
-                ut.rollback();
+                try {
+                    ut.rollback();
+                } catch (IllegalStateException ex1) {
+                    Logger.getLogger(JPATestServlet.class.getName()).log(Level.SEVERE, null, ex1);
+                } catch (SecurityException ex1) {
+                    Logger.getLogger(JPATestServlet.class.getName()).log(Level.SEVERE, null, ex1);
+                } catch (SystemException ex1) {
+                    Logger.getLogger(JPATestServlet.class.getName()).log(Level.SEVERE, null, ex1);
+                }
             }
             
         } catch (NamingException ex) {
