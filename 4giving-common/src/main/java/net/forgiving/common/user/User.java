@@ -12,9 +12,15 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,8 +36,13 @@ import javax.validation.constraints.Size;
  *
  * @author gabalca
  */
-@Entity
+//@Entity
 @Table(name = "USERS")
+@Access(AccessType.FIELD)
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "discr", discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorValue("0")
 public class User implements Serializable {
     
     @Id
@@ -60,6 +71,7 @@ public class User implements Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     @Access(AccessType.PROPERTY)
+    @Column(name =  "created")
     public Date getCreatedDate(){
         return created == null ? null: new Date(created.toEpochMilli());
     }
